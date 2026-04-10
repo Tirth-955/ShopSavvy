@@ -3,26 +3,20 @@ import { PaletteIcon } from "lucide-react";
 
 const THEMES = [
   "dark",
-  "synthwave",
-  "halloween",
   "forest",
   "aqua",
   "black",
-  "luxury",
-  "dracula",
   "business",
   "night",
-  "coffee",
-  "dim",
   "sunset",
 ];
 
 function ThemeSelector() {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("theme") || "forest";
+      return localStorage.getItem("theme") || "night";
     }
-    return "forest";
+    return "night";
   });
 
   useEffect(() => {

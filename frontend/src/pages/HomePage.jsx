@@ -1,6 +1,6 @@
 import { PackageIcon, SparkleIcon } from "lucide-react";
 import { Link } from "react-router";
-import { SignInButton } from "@clerk/clerk-react";
+import { SignInButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 
 import { useProducts } from "../hooks/useProducts";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -23,10 +23,11 @@ function HomePage() {
     <div className="space-y-10">
       {/* HERO */}
       <div className="hero bg-linear-to-br from-base-300 via-base-200 to-base-300 rounded-box overflow-hidden">
-        <div className="hero-content flex-col lg:flex-row-reverse gap-10 py-10">
+        <div className="hero-content flex-col lg:flex-row-reverse gap-10">
           <div className="relative">
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full scale-110" />
           </div>
+          
           <div className="text-center lg:text-left">
             <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
               Share Your <span className="text-primary">Products</span>
@@ -34,12 +35,29 @@ function HomePage() {
             <p className="py-4 text-base-content/60">
               Upload, discover, and connect with creators.
             </p>
-            <SignInButton mode="modal">
+
+            {/* <SignInButton mode="modal">
               <button className="btn btn-primary">
                 <SparkleIcon className="size-4" />
                 Start Selling
               </button>
-            </SignInButton>
+            </SignInButton> */}
+
+            <SignedOut>
+              <SignInButton mode="modal">
+                <button className="btn btn-primary">
+                  <SparkleIcon className="size-4" />
+                  Start Selling
+                </button>
+              </SignInButton>
+            </SignedOut>
+
+            <SignedIn>
+              <Link to="/create" className="btn btn-primary">
+                <SparkleIcon className="size-4" />
+                Start Selling
+              </Link>
+            </SignedIn>
           </div>
         </div>
       </div>

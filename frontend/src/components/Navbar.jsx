@@ -21,7 +21,7 @@ function Navbar() {
             <ShoppingBagIcon className="size-5 text-primary" />
 
             <span className="text-lg font-bold font-mono uppercase tracking-wider">
-              Productify
+              ShopSavvy
             </span>
           </Link>
         </div>

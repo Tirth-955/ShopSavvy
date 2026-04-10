@@ -37,15 +37,37 @@ export const upsertUser = async (data: NewUser) => {
     // }
     // return createUser(data);
 
-    const [user] = await db
-        .insert(users)
-        .values(data)
-        .onConflictDoUpdate({
-            target: users.id,
-            set: data,
-        })
-        .returning();
+    // const [user] = await db
+    //     .insert(users)
+    //     .values(data)
+    //     .onConflictDoUpdate({
+    //         target: users.id,
+    //         set: data,
+    //     })
+    //     .returning();
 
+    // Check if user exists by email first
+    const existingByEmail = await db.query.users.findFirst({
+        where: eq(users.email, data.email),
+    });
+
+    if (existingByEmail) {
+        // Update the existing record (even if id changed)
+        const [user] = await db
+            .update(users)
+            .set({
+                id: data.id,
+                name: data.name,
+                imageUrl: data.imageUrl,
+                updatedAt: new Date(),
+            })
+            .where(eq(users.email, data.email))
+            .returning();
+        return user;
+    }
+
+    // New user, insert fresh
+    const [user] = await db.insert(users).values(data).returning();
     return user;
 };
 
