@@ -15,6 +15,7 @@ import CreatePage from "./pages/CreatePage";
 import EditProductPage from "./pages/EditProductPage";
 import useAuthReq from "./hooks/useAuthReq";
 import useUserSync from "./hooks/useUserSync";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const { isClerkLoaded, isSignedIn } = useAuthReq();
@@ -29,10 +30,13 @@ function App() {
       <main className="max-w-5xl mx-auto px-4 py-8">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
+          <Route
+            path="/product/:id"
+            element={isSignedIn ? <ProductPage /> : <Navigate to={"/"} />}
+          />
           <Route
             path="/profile"
-            element={isSignedIn ? <ProductPage /> : <Navigate to={"/"} />}
+            element={isSignedIn ? <ProfilePage /> : <Navigate to={"/"} />}
           />
           <Route
             path="/create"

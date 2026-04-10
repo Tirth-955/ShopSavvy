@@ -27,6 +27,8 @@ export const createComment = async (req: Request, res: Response) => {
             userId,
             productId,
         });
+
+        res.status(201).json(comment);
     } catch (error) {
         console.error("Error creating comment:", error);
         res.status(500).json({ error: "Failed to create comment" });
@@ -37,7 +39,7 @@ export const deleteComment = async (req: Request, res: Response) => {
     try {
         const { userId } = getAuth(req);
         if (!userId) {
-            return res.status(401).json({ error: "Unauthorized" });
+            return res.status(401).json({ message: "Unauthorized" });
         }
 
         const commentId = req.params.commentId as string;
@@ -53,7 +55,7 @@ export const deleteComment = async (req: Request, res: Response) => {
 
         await queries.deleteComment(commentId);
 
-        res.status(200).json({ error: "Comment deleted successfully" });
+        res.status(200).json({ message: "Comment deleted successfully" });
     } catch (error) {
         console.error("Error deleting comment:", error);
         res.status(500).json({ error: "Failed delete comment" });
